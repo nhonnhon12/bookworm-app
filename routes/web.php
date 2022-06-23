@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Resources\BookCollection;
+use App\Http\Resources\BookResource;
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +18,8 @@ use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/book', function (){
+    return new BookCollection();
 });
 

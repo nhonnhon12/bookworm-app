@@ -17,11 +17,11 @@ class Book extends Model
     //Relationships
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'book_id', 'id');
+        return $this->hasMany(Review::class);
     }
     public function discounts()
     {
-        return $this->hasMany(Discount::class, 'book_id', 'id');
+        return $this->hasMany(Discount::class);
     }
     public function orderitems()
     {
@@ -29,10 +29,10 @@ class Book extends Model
     }
     public function author()
     {
-        return $this->belongsTo(Author::class, 'id', 'author_id');
+        return $this->belongsTo(Author::class);
     }
     public function category()
     {
-        return $this->belongsTo(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class);
     }
 }
