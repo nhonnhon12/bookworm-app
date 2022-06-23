@@ -11,9 +11,11 @@ class Discount extends Model
 
     public $timestamps = false;
     protected $table = 'discount';
+    protected $primaryKey = 'id';
+    public  $incrementing = true;
 
-    public function Book()
+    public function book()
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(Book::class, 'id', 'book_id');
     }
 }
