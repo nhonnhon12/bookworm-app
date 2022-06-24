@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OnSaleController;
+use App\Http\Controllers\PopularController;
 use App\Http\Controllers\RecommendedController;
+use App\Http\Controllers\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('home/on-sale-section', OnSaleController::class)->only('index');
-Route::resource('home/recommended-section', RecommendedController::class)->only('index');
-
+Route::get('books/get-top-discount', OnSaleController::class);
+Route::get('books/get-recommended', RecommendedController::class);
+Route::get('books/get-popular', PopularController::class);
+Route::resource('/books', BooksController::class)->only(['index', 'show']);
+Route::resource('reviews', ReviewsController::class)->only(['index', 'create', 'show', 'update', 'destroy'])->middleware('Authenticate');
+Route::resource('cart', CartController::class)->only('index', 'create', 'update', 'destroy')->middleware('Authenticate');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Discount;
+use App\Models\Review;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookResource extends JsonResource
@@ -10,29 +12,30 @@ class BookResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array
      */
     public function toArray($request)
     {
-        $price = null;
-        foreach ($this->discounts as $discount) {
-            if(((date('d/m/Y')>=$discount->discount_start_date) && is_null($discount->discount_end_date ))
-            || ((date('d/m/Y')>=$discount->discount_start_date) && (date('d/m/Y')<=$discount->discount_end_date))) {
-                $price = $discount->discount_price;
-            }
-        }
-        $sum = 0;
-        $count = 0;
-        foreach($this->reviews as $r){
-            $sum += $r->rating_star;
-            $count++;
-        }
-        if($count === 0){
-            $avg = null;
-        }
-        else{
-            $avg = floor($sum/$count);
-        }
+        //get discount price
+        $price = Discount::where('book_id', $this->id)
+            ->where('discount_start_date', '<=', date('Y-m-d'))
+            ->where(function ($query){
+                $query->whereNull('discount_end_date')
+                    ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+            })
+            ->selectRaw('min(discount_price)')
+            ->get();
+        $price = $price->pluck("min")->first();
+
+        //get rating star
+        $rating = Review::groupBy('book_id')
+            ->where('book_id', $this->id)
+            ->selectRaw('avg(rating_start)')
+            ->get();
+        $rating = $rating->pluck("avg")->first();
+        if($rating!=null) $rating=round($rating, 1);
+
+        //return value
         return [
             'id' => $this->id,
             'author' => $this->author->author_name,
@@ -42,7 +45,7 @@ class BookResource extends JsonResource
             'photo' => $this->book_cover_photo,
             'price' => $price,
             'original_price' => $this->book_price,
-            'rating' => $avg,
+            'rating' => $rating,
         ];
     }
 }
