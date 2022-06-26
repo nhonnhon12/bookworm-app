@@ -4,7 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Discount;
 use App\Models\Review;
+use Illuminate\Support\Facades\DB;
 
 class BookRepository extends BaseRepository
 {
@@ -30,16 +32,97 @@ class BookRepository extends BaseRepository
         if($conditions->has('category')){
             $this->query->where('category_id', $conditions->get('category'));
         }
-        if($conditions->has('star-bellow')){
-            $booksBelow = Review::groupBy('book_id')
-                ->havingRaw("avg(rating_start) >= ".$conditions->get('star-bellow'))
-                ->select('book_id');
-            $this->query->whereIn('id', $booksBelow);
+        if($conditions->has('star')){
+            if($conditions->get('star') > 0) {
+                $booksBelow = Review::groupBy('book_id')
+                    ->havingRaw("avg(rating_start) >= " . $conditions->get('star'))
+                    ->select('book_id');
+                $this->query->whereIn('id', $booksBelow);
+            }
         }
         if($conditions->has('sort')){
-            $this->query->orderBy($conditions->get('sort'), $conditions->get('order'));
+            if($conditions->get('sort')=='sale') {
+                $price = Discount::query()
+                    ->where('discount_start_date', '<=', date('Y-m-d'))
+                    ->where(function ($query){
+                        $query->whereNull('discount_end_date')
+                            ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+                    })
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, min(discount_price) as p');
+                $this->query
+                    ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+                    ->orderByRaw('case when d.p is not null then (book_price - d.p) else 0 end desc, coalesce(d.p, book_price)');
+            }
+            if($conditions->get('sort')=='popularity') {
+                $review = Review::query()
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, count(rating_start) as c');
+                $price = Discount::query()
+                    ->where('discount_start_date', '<=', date('Y-m-d'))
+                    ->where(function ($query){
+                        $query->whereNull('discount_end_date')
+                            ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+                    })
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, min(discount_price) as p');
+                $this->query
+                    ->leftJoinSub($review, 'c', 'book.id', 'book_id')
+                    ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+                    ->orderByRaw('c desc nulls last, coalesce(d.p, book_price)');
+            }
+            if($conditions->get('sort')=='recommended') {
+                $review = Review::query()
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, avg(rating_start) as a');
+                $price = Discount::query()
+                    ->where('discount_start_date', '<=', date('Y-m-d'))
+                    ->where(function ($query){
+                        $query->whereNull('discount_end_date')
+                            ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+                    })
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, min(discount_price) as p');
+                $this->query
+                    ->leftJoinSub($review, 'c', 'book.id', 'book_id')
+                    ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+                    ->orderByRaw('a desc nulls last, coalesce(d.p, book_price)');
+            }
+
+            if($conditions->get('sort')=='price-asc') {
+                $price = Discount::query()
+                    ->where('discount_start_date', '<=', date('Y-m-d'))
+                    ->where(function ($query){
+                        $query->whereNull('discount_end_date')
+                            ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+                    })
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, min(discount_price) as p');
+                $this->query
+                    ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+                    ->orderByRaw('coalesce(d.p, book_price) asc');
+            }
+            if($conditions->get('sort')=='price-desc') {
+                $price = Discount::query()
+                    ->where('discount_start_date', '<=', date('Y-m-d'))
+                    ->where(function ($query){
+                        $query->whereNull('discount_end_date')
+                            ->orWhere('discount_end_date', '>=', date('Y-m-d'));
+                    })
+                    ->groupBy('book_id')
+                    ->selectRaw('book_id, min(discount_price) as p');
+                $this->query
+                    ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+                    ->orderByRaw('coalesce(d.p, book_price) desc');
+            }
         }
-        return $this->query->get();
+        if($conditions->has('limit')){
+            $this->query->take($conditions->get('limit'));
+        }
+        if($conditions->has('paginate')){
+            return $this->query->paginate($conditions->get('paginate'));
+        }
+        else return $this->query->get();
         //http://127.0.0.1:8000/api/books?author=La&category=4&sort=book_price&order=desc
     }
 
