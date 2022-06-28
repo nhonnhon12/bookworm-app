@@ -16,7 +16,7 @@ class PopularController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $r= collect(['limit' => '8', 'sort' => 'popularity']);
+        $r = collect(['limit' => '8', 'sort' => 'popularity']);
         $_bookRepository = new BookRepository();
         return response(BookResource::collection($_bookRepository->filter($r)));
     }

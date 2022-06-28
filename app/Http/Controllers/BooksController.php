@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\Review;
 use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BooksController extends Controller
 {
@@ -24,6 +25,14 @@ class BooksController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = $request->validate([
+            'author' => 'max:50|alpha',
+            'category' => 'alpha',
+            'star' => 'digits_between:0,5',
+            'sort' => Rule::in(['sale', 'popularity', 'recommended', 'price-asc', 'price-desc']),
+            'limit' => Rule::in(['8', '10']),
+            'paginate' => Rule::in(['5', '15', '20', '25'])
+        ]);
         return response(BookResource::collection($this->_bookRepository->filter($request)));
     }
 

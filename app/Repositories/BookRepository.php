@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Discount;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class BookRepository extends BaseRepository
 {
