@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookResource;
-use App\Models\Author;
-use App\Models\Book;
-use App\Models\Review;
 use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -27,7 +24,7 @@ class BooksController extends Controller
     {
         $validator = $request->validate([
             'author' => 'max:50|alpha',
-            'category' => 'alpha',
+            'category' => 'integer',
             'star' => 'digits_between:0,5',
             'sort' => Rule::in(['sale', 'popularity', 'recommended', 'price-asc', 'price-desc']),
             'limit' => Rule::in(['8', '10']),
