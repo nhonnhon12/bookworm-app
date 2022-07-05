@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Carousel, Col, Container, Nav, Navbar, Row} from "react-bootstrap";
+import {ButtonGroup, Col, Container, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import BookCard from "./BookCard";
 import axios from "axios";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 export default class GetBooks extends Component {
     state = {
@@ -37,13 +39,13 @@ export default class GetBooks extends Component {
         if(this.props.show !== 'carousel') {
             return <>
                 <Container>
-                    <Row sm={1} md={4} className="g-4">
+                    <Row sm={2} md={4} className="g-4">
                         {
                             this.state.books.map(book =>
-                                <Col>
+                                <Col style = {{ padding: '10px'}}>
                                     <BookCard id={book.id} title={book.title} author={book.author}
-                                              orginal_price={book.original_price} price={book.price}
-                                              image={book.photo}/>
+                                      orginal_price={book.original_price} price={book.price}
+                                      image={book.photo}/>
                                 </Col>)
                         }
                     </Row>
@@ -51,16 +53,48 @@ export default class GetBooks extends Component {
             </>;
         }
         else {
+            const responsive = {
+                superLargeDesktop: {
+                    // the naming can be any, depends on you.
+                    breakpoint: { max: 4000, min: 3000 },
+                    items: 8
+                },
+                desktop: {
+                    breakpoint: { max: 3000, min: 1024 },
+                    items: 4
+                },
+                tablet: {
+                    breakpoint: { max: 1024, min: 464 },
+                    items: 2
+                },
+            };
             return <>
-                <Carousel slide>
-                        {
-                            this.state.books.map(book =>
-                                <Carousel.Item interval={10000}>
-                                    <BookCard id={book.id} title={book.title} author={book.author}
-                                              orginal_price={book.original_price} price={book.price}
-                                              image={book.photo}/>
-                                </Carousel.Item>)
-                        }
+                <Carousel swipeable={false}
+                          draggable={false}
+                          showDots={true}
+                          responsive={responsive}
+                          ssr={true} // means to render carousel on server-side.
+                          infinite={true}
+                          autoPlay={this.props.deviceType !== "mobile"}
+                          autoPlaySpeed={5000}
+                          keyBoardControl={true}
+                          customTransition="all .5"
+                          transitionDuration={10}
+                          containerClass="carousel-container"
+                          removeArrowOnDeviceType={["tablet", "mobile"]}
+                          deviceType={this.props.deviceType}
+                          dotListClass="custom-dot-list-style"
+                          itemClass="carousel-item-padding-40-px">
+                    {
+
+                        this.state.books.map(book =>
+                            <div style = {{ padding: '10px' }}>
+                                <BookCard id={book.id} title={book.title} author={book.author}
+                                  orginal_price={book.original_price} price={book.price}
+                                  image={book.photo}/>
+                            </div>
+                        )
+                    }
                 </Carousel>
             </>;
         }

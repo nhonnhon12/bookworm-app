@@ -9,6 +9,9 @@ const styles = {
         objectFit: 'cover',
         width: '100%',
         height: '20vw'
+    },
+    card:{
+        // margin: '0.2vw'
     }
 }
 
