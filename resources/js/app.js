@@ -10,24 +10,27 @@ import Shop from "./components/Shop";
 import About from "./components/About";
 import Error from "./components/Error";
 
+const footerStyle = {
+    display: 'flex',
+    margin: 'auto',
+    justifyContent: 'center',
+}
 
 export default class App extends Component {
     render() {
         return (
             <>
                 <Header/>
-                <Container>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route exact path="/" element={<Home/>}/>
-                            <Route path="/shop" element={<Shop/>}/>
-                            <Route path="/about" element={<About/>}/>
-                            <Route path="/cart" element={<Cart/>}/>
-                            <Route path="/" element={<Error/>}/>
-                        </Routes>
-                    </BrowserRouter>
-                    <Footer/>
-                </Container>
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path="/" element={<Home/>}/>
+                        <Route path="/shop" element={<Shop/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/cart" element={<Cart/>}/>
+                        <Route path="/" element={<Error/>}/>
+                    </Routes>
+                </BrowserRouter>
+                <Footer/>
             </>
         );
     }
