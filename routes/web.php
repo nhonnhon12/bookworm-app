@@ -16,6 +16,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('{path?}', "App\Http\Controllers\AppController")->where('path', '[a-zA-Z0-9-/]+');
