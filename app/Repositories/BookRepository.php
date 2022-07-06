@@ -23,25 +23,27 @@ class BookRepository extends BaseRepository
 
     public function filter($conditions)
     {
+        // author filter
         if($conditions->has('author')){
             //dd($conditions->get('author'));
-            $authorId = Author::whereRaw("author_name like '%". $conditions->get('author') ."%'")
-                ->select('id')
-                ->get();
-            $this->query->whereIn('author_id', $authorId);
+            $this->query->where('author_id', $conditions->get('author'));
         }
+        // category filter
         if($conditions->has('category')){
             $this->query->where('category_id', $conditions->get('category'));
         }
-        if($conditions->has('star')){
-            if($conditions->get('star') > 0) {
+        //rating filter
+        if($conditions->has('rating')){
+            if($conditions->get('rating') > 0) {
                 $booksBelow = Review::groupBy('book_id')
-                    ->havingRaw("avg(rating_start) >= " . $conditions->get('star'))
+                    ->havingRaw("avg(rating_start) >= " . $conditions->get('rating'))
                     ->select('book_id');
                 $this->query->whereIn('id', $booksBelow);
             }
         }
+        //sort: get value of sort to sort
         if($conditions->has('sort')){
+            //by sale
             if($conditions->get('sort')=='sale') {
                 $price = Discount::query()
                     ->where('discount_start_date', '<=', date('Y-m-d'))
@@ -55,6 +57,7 @@ class BookRepository extends BaseRepository
                     ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
                     ->orderByRaw('case when d.p is not null then (book_price - d.p) else 0 end desc, coalesce(d.p, book_price)');
             }
+            //by popularity
             if($conditions->get('sort')=='popularity') {
                 $review = Review::query()
                     ->groupBy('book_id')
@@ -72,6 +75,7 @@ class BookRepository extends BaseRepository
                     ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
                     ->orderByRaw('c desc nulls last, coalesce(d.p, book_price)');
             }
+            //by recommended
             if($conditions->get('sort')=='recommended') {
                 $review = Review::query()
                     ->groupBy('book_id')
@@ -89,7 +93,7 @@ class BookRepository extends BaseRepository
                     ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
                     ->orderByRaw('a desc nulls last, coalesce(d.p, book_price)');
             }
-
+            //by price asc
             if($conditions->get('sort')=='price-asc') {
                 $price = Discount::query()
                     ->where('discount_start_date', '<=', date('Y-m-d'))
@@ -103,6 +107,7 @@ class BookRepository extends BaseRepository
                     ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
                     ->orderByRaw('coalesce(d.p, book_price) asc');
             }
+            //by price desc
             if($conditions->get('sort')=='price-desc') {
                 $price = Discount::query()
                     ->where('discount_start_date', '<=', date('Y-m-d'))
@@ -117,9 +122,11 @@ class BookRepository extends BaseRepository
                     ->orderByRaw('coalesce(d.p, book_price) desc');
             }
         }
+        //limit number of book to get
         if($conditions->has('limit')){
             $this->query->take($conditions->get('limit'));
         }
+        //paginate
         if($conditions->has('paginate')){
             return $this->query->paginate($conditions->get('paginate'));
         }

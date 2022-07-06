@@ -9,7 +9,7 @@ function Footer() {
         margin: 'auto',
         justifyContent: 'center',
         padding: '2vw 10vw',
-        background: 'lightgray'
+        background: 'LightCyan'
     }
     const footerContent = {
         margin: '1vw',

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OnSaleController;
 use App\Http\Controllers\PopularController;
 use App\Http\Controllers\RecommendedController;
@@ -29,3 +31,5 @@ Route::get('books/get-popular', PopularController::class);
 Route::resource('books', BooksController::class)->only(['index', 'show']);
 Route::resource('reviews', ReviewsController::class)->only(['index', 'store']);
 Route::resource('cart', CartController::class)->only('index', 'create', 'update', 'destroy');
+Route::get('/authors', AuthorController::class);
+Route::get('/categories', CategoryController::class);

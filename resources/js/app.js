@@ -21,15 +21,17 @@ export default class App extends Component {
         return (
             <>
                 <Header/>
-                <BrowserRouter>
-                    <Routes>
-                        <Route exact path="/" element={<Home/>}/>
-                        <Route path="/shop" element={<Shop/>}/>
-                        <Route path="/about" element={<About/>}/>
-                        <Route path="/cart" element={<Cart/>}/>
-                        <Route path="/" element={<Error/>}/>
-                    </Routes>
-                </BrowserRouter>
+                <div style={{ minHeight: screen.height - 120 }}>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route exact path="/" element={<Home/>}/>
+                            <Route path="/shop" element={<Shop/>}/>
+                            <Route path="/about" element={<About/>}/>
+                            <Route path="/cart" element={<Cart/>}/>
+                            <Route path="/" element={<Error/>}/>
+                        </Routes>
+                    </BrowserRouter>
+                </div>
                 <Footer/>
             </>
         );

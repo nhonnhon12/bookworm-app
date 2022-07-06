@@ -23,14 +23,20 @@ class BooksController extends Controller
     public function index(Request $request)
     {
         $validator = $request->validate([
-            'author' => 'max:50|alpha',
+            'author' => 'integer',
             'category' => 'integer',
-            'star' => 'digits_between:0,5',
+            'rating' => 'digits_between:0,5',
             'sort' => Rule::in(['sale', 'popularity', 'recommended', 'price-asc', 'price-desc']),
             'limit' => Rule::in(['8', '10']),
             'paginate' => Rule::in(['5', '15', '20', '25'])
         ]);
-        return response(BookResource::collection($this->_bookRepository->filter($request)));
+        //return response(BookResource::collection($this->_bookRepository->filter($request)));
+        $book = $this->_bookRepository->filter($request);
+        if($book->total() === null) return response(BookResource::collection($book));
+        else return response(collect([
+            'data' => BookResource::collection($book),
+            'total' => $book->total()
+        ]));
     }
 
     /**
