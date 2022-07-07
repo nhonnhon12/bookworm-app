@@ -124,7 +124,7 @@ class BookRepository extends BaseRepository
         }
         //limit number of book to get
         if($conditions->has('limit')){
-            $this->query->take($conditions->get('limit'));
+            $this->query->limit($conditions->get('limit'));
         }
         //paginate
         if($conditions->has('paginate')){

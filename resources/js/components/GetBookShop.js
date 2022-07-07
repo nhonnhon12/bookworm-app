@@ -16,7 +16,12 @@ function queryBuilder(props) { //build query for api
     props.author != 0 ? q += '&author=' + props.author: 1;
     props.category != 0 ? q += '&category=' + props.category: 1;
     props.rating != 0 ? q += '&rating=' + props.rating: 1;
-    props._sort !== 0 ? q += '&sort=' + props._sort: 1;
+    switch (props._sort){
+        case 'sale': q += '&sort=' + props._sort; break;
+        case 'popularity': q += '&sort=' + props._sort; break;
+        default: q += '&sort=' + props._sort;
+    }
+    //props._sort !== 0 ? q += '&sort=' + props._sort: 1;
     props.paginate !== 0 ? q += '&paginate=' + props.paginate: 1;
     props.page !==0 ? q+= '&page=' + props.page: 1;
     return q;
