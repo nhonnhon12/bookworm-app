@@ -27,7 +27,7 @@ function CategoryFilter(props){
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
             style={{
-                width: 190,
+                width: 150,
             }}
             defaultValue= "All Categories"
             onChange={(value) => props.categoryCallback(value)}

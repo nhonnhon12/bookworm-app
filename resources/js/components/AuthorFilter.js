@@ -25,7 +25,7 @@ function AuthorFilter(props) {
             showSearch
             optionFilterProp="children"
             style={{
-                width: 190,
+                width: 150,
             }}
             defaultValue= "All Authors"
             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}

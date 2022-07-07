@@ -66,37 +66,37 @@ function Shop() {
         <>
             <Container style={{padding: '3vw 0vw'}}>
                 <Row>
-                    <Col md={3} xs={12}>
+                    <Col md={2} xs={12}>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
-                                <Row>Author: </Row>
-                                <Row><AuthorFilter authorCallback={e => authorCallback(e)}/></Row>
+                            <Col md="auto" style={{padding: '10px 5px'}}>
+                                <Row style={{margin: 'auto'}}>Author: </Row>
+                                <Row style={{margin: 'auto'}}><AuthorFilter authorCallback={e => authorCallback(e)} /></Row>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
-                                <Row>Category: </Row>
-                                <Row><CategoryFilter categoryCallback={e => categoryCallback(e)}/></Row>
+                            <Col md="auto" style={{padding: '10px 5px'}}>
+                                <Row style={{margin: 'auto'}}>Category: </Row>
+                                <Row style={{margin: 'auto'}}><CategoryFilter categoryCallback={e => categoryCallback(e)}/></Row>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
-                                <Row>Rating: </Row>
-                                <Row><DropdownTypes type='rating' callback={e => ratingCallback(e)}/></Row>
+                            <Col md="auto" style={{padding: '10px 5px'}}>
+                                <Row style={{margin: 'auto'}}>Rating: </Row>
+                                <Row style={{margin: 'auto'}}><DropdownTypes type='rating' callback={e => ratingCallback(e)}/></Row>
                             </Col>
                         </Row>
                     </Col>
-                    <Col md={9} xs={12}>
+                    <Col md={10} xs={12}>
                         <Row className="justify-content-md-center">
-                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 3}} xs={12}
-                                 style={{padding: '10px 5px', position: "relative"}}>
-                                <Row>Sort: </Row>
-                                <Row><DropdownTypes type='sort' callback={e => sortCallback(e)}/></Row>
+                            <Col md={{order: 'last', span: 2}} xs={12}
+                                 style={{padding: '10px 5px'}}>
+                                <Row style={{margin: 'auto'}}>Sort: </Row>
+                                <Row style={{margin: 'auto'}}><DropdownTypes type='sort' callback={e => sortCallback(e)}/></Row>
                             </Col>
-                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 3}} xs={12}
-                                 style={{padding: '10px 5px', position: "relative"}}>
-                                <Row>Paginate: </Row>
-                                <Row><DropdownTypes type='paginate' callback={e => paginateCallback(e)}/></Row>
+                            <Col md={{order: 'last', span: 2}} xs={12}
+                                 style={{padding: '10px 5px'}}>
+                                <Row style={{margin: 'auto'}}>Paginate: </Row>
+                                <Row style={{margin: 'auto'}}><DropdownTypes type='paginate' callback={e => paginateCallback(e)}/></Row>
                             </Col>
                             <Col style={{display: "inline-block", alignSelf: "flex-end", padding: "10px 5px"}}>
                                 <h3><CountNumberItem paginate={paginate} page={page} total={total} item="books" /></h3>

@@ -14,7 +14,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 190,
+                        width: 150,
                     }}
                     defaultValue="All Rating"
                     optionFilterProp="children"
@@ -37,7 +37,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 190,
+                        width: 150,
                     }}
                     defaultValue="Price Up"
                     optionFilterProp="children"
@@ -58,7 +58,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 190,
+                        width: 150,
                     }}
                     defaultValue="05 per page"
                     optionFilterProp="children"
