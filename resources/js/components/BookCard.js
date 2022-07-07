@@ -16,7 +16,7 @@ const styles = {
     }
 }
 
-export default class BookCard extends Component {
+class BookCard extends Component {
     constructor(props) {
         super(props);
     }
@@ -62,4 +62,4 @@ export default class BookCard extends Component {
             </Card>
         </>
     }
-}
+} export default BookCard;

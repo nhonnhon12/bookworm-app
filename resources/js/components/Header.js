@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
-export default class Header extends Component {
+class Header extends Component {
     render() {
         return <>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -33,4 +33,4 @@ export default class Header extends Component {
             </Navbar>
         </>;
     }
-}
+} export default Header;

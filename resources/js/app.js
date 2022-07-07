@@ -16,26 +16,24 @@ const footerStyle = {
     justifyContent: 'center',
 }
 
-export default class App extends Component {
-    render() {
-        return (
-            <>
-                <Header/>
-                <div style={{ minHeight: screen.height - 120 }}>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route exact path="/" element={<Home/>}/>
-                            <Route path="/shop" element={<Shop/>}/>
-                            <Route path="/about" element={<About/>}/>
-                            <Route path="/cart" element={<Cart/>}/>
-                            <Route path="/" element={<Error/>}/>
-                        </Routes>
-                    </BrowserRouter>
-                </div>
-                <Footer/>
-            </>
-        );
-    }
-}
+function App() {
+    return (
+        <>
+            <Header/>
+            <div style={{ minHeight: screen.height - 120 }}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path="/" element={<Home/>}/>
+                        <Route path="/shop" element={<Shop/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/cart" element={<Cart/>}/>
+                        <Route path="/" element={<Error/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </div>
+            <Footer style={{position: "absolute", bottom: "0"}}/>
+        </>
+    );
+} export default App;
 
 ReactDOM.render(<App />, document.getElementById('app'));
