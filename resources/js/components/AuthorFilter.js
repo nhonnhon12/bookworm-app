@@ -6,12 +6,8 @@ import {Option} from "antd/es/mentions";
 import 'antd/dist/antd.css';
 import axios from "axios";
 
-function AuthorFilter() {
+function AuthorFilter(props) {
     const [data, setData] = useState([]);
-
-    function handleChange(value){
-        console.log(value);
-    }
 
     useEffect(() => {
         let mounted = true;
@@ -29,11 +25,11 @@ function AuthorFilter() {
             showSearch
             optionFilterProp="children"
             style={{
-                width: 150,
+                width: 190,
             }}
             defaultValue= "All Authors"
             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-            onChange={handleChange}
+            onChange={(value) => props.authorCallback(value)}
         >
             <Select.Option key="0" value="0">All Authors</Select.Option>
             {

@@ -14,7 +14,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 150,
+                        width: 190,
                     }}
                     defaultValue="All Rating"
                     optionFilterProp="children"
@@ -22,12 +22,13 @@ function DropdownTypes(props) {
                     filterSort={(optionA, optionB) =>
                         optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                     }
+                    onChange={(value) => props.callback(value)}
                 >
                     <Select.Option key="0" value="0">All Rating</Select.Option>
                     <Select.Option key="1" value="1">Above 1 stars</Select.Option>
                     <Select.Option key="2" value="2">Above 2 stars</Select.Option>
                     <Select.Option key="3" value="3">Above 3 stars</Select.Option>
-                    <Select.Option key="5" value="4">Above 4 stars</Select.Option>
+                    <Select.Option key="4" value="4">Above 4 stars</Select.Option>
                     <Select.Option key="5" value="5">Above 5 stars</Select.Option>
                 </Select>
             </>;
@@ -36,7 +37,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 150,
+                        width: 190,
                     }}
                     defaultValue="Price Up"
                     optionFilterProp="children"
@@ -44,11 +45,12 @@ function DropdownTypes(props) {
                     filterSort={(optionA, optionB) =>
                         optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                     }
+                    onChange={(value) => props.callback(value)}
                 >
-                    <Select.Option key="1" value="0">Price Up</Select.Option>
-                    <Select.Option key="2" value="1">Price Down</Select.Option>
-                    <Select.Option key="3" value="2">On-sale</Select.Option>
-                    <Select.Option key="4" value="3">Popularity</Select.Option>
+                    <Select.Option key="1" value="price-asc">Price Up</Select.Option>
+                    <Select.Option key="2" value="price-desc">Price Down</Select.Option>
+                    <Select.Option key="3" value="sale">On-sale</Select.Option>
+                    <Select.Option key="4" value="popularity">Popularity</Select.Option>
                 </Select>
             </>;
         case 'paginate':
@@ -56,7 +58,7 @@ function DropdownTypes(props) {
                 <Select
                     showSearch
                     style={{
-                        width: 150,
+                        width: 190,
                     }}
                     defaultValue="05 per page"
                     optionFilterProp="children"
@@ -64,11 +66,12 @@ function DropdownTypes(props) {
                     filterSort={(optionA, optionB) =>
                         optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                     }
+                    onChange={(value) => props.callback(value)}
                 >
-                    <Select.Option key="1" value="1">05 per page</Select.Option>
-                    <Select.Option key="2" value="2">15 per page</Select.Option>
-                    <Select.Option key="3" value="3">20 per page</Select.Option>
-                    <Select.Option key="4" value="4">25 per page</Select.Option>
+                    <Select.Option key="1" value="5">05 per page</Select.Option>
+                    <Select.Option key="2" value="15">15 per page</Select.Option>
+                    <Select.Option key="3" value="20">20 per page</Select.Option>
+                    <Select.Option key="4" value="25">25 per page</Select.Option>
                 </Select>
             </>;
         default:

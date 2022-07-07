@@ -6,12 +6,8 @@ import {Option} from "antd/es/mentions";
 import 'antd/dist/antd.css';
 import axios from "axios";
 
-function CategoryFilter(){
+function CategoryFilter(props){
     const [data, setData] = useState([]);
-
-    function handleChange(value){
-
-    }
 
     useEffect(() => {
         let mounted = true;
@@ -31,10 +27,10 @@ function CategoryFilter(){
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
             style={{
-                width: 150,
+                width: 190,
             }}
             defaultValue= "All Categories"
-            onChange={handleChange}
+            onChange={(value) => props.categoryCallback(value)}
         >
                 <Select.Option key="0" value="0">All Categories</Select.Option>
                 {

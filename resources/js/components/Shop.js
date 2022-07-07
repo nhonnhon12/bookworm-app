@@ -11,73 +11,110 @@ import CountNumberItem from "./CountNumberItem";
 import {value} from "lodash/seq";
 
 function Shop() {
-    let props = {
-        'author': 0,
-        'category': 0,
-        'rating': 0,
-        '_sort': 0,
-        'paginate': 5,
-        'page': 1,
-        'total': 0
-    };
+    const [author, setAuthor] = useState(0);
+    const [category, setCategory] = useState(0);
+    const [rating, setRating] = useState(0);
+    const [_sort, setSort] = useState('price-asc');
+    const [paginate, setPaginate] = useState(5);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(10);
+    console.log("render");
 
-    function queryBuilder() { //build query for api
-        let q = '?';
-        props.author !== 0 ? q += '&author=' + props.author: 1;
-        props.category !== 0 ? q += '&category=' + props.category: 1;
-        props.rating !== 0 ? q += '&rating=' + props.rating: 1;
-        props._sort !== 0 ? q += '&sort=' + props._sort: 1;
-        props.paginate !== 0 ? q += '&paginate=' + props.paginate: 1;
-        props.page !==0 ? q+= '&page=' + props.page: 1;
-        return q;
+    // let props = {
+    //     'author': 0,
+    //     'category': 0,
+    //     'rating': 0,
+    //     '_sort': 0,
+    //     'paginate': 5,
+    //     'page': 1,
+    // };
+
+    const authorCallback = (i) => {
+        setAuthor(i);
+        setPage(1);
+        console.log(author);
+    }
+    const categoryCallback = (i) => {
+        setCategory(i);
+        setPage(1);
+        console.log(category);
+    }
+    const ratingCallback = (i) => {
+        setRating(i);
+        setPage(1);
+        console.log(rating);
+    }
+    const sortCallback = (i) => {
+        setSort(i);
+        console.log(_sort);
+    }
+    const paginateCallback = (i) => {
+        setPaginate(i);
+        if(page>=total/paginate) setPage(1);
+        console.log(paginate);
+    }
+    const pageCallback = (i, j) => {
+        setPage(i);
+        console.log("page: " + page);
+    }
+    const totalCallback = (i) => {
+        setTotal(i);
+        console.log("total: " + total);
     }
 
     return (
         <>
             <Container style={{padding: '3vw 0vw'}}>
                 <Row>
-                    <Col md={2} xs={12}>
+                    <Col md={3} xs={12}>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
                                 <Row>Author: </Row>
-                                <Row><AuthorFilter /></Row>
+                                <Row><AuthorFilter authorCallback={e => authorCallback(e)}/></Row>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
                                 <Row>Category: </Row>
-                                <Row><CategoryFilter/></Row>
+                                <Row><CategoryFilter categoryCallback={e => categoryCallback(e)}/></Row>
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                            <Col md="auto" style={{padding: '10px 5px', position: "relative"}}>
                                 <Row>Rating: </Row>
-                                <Row><DropdownTypes type='rating'/></Row>
+                                <Row><DropdownTypes type='rating' callback={e => ratingCallback(e)}/></Row>
                             </Col>
                         </Row>
                     </Col>
-                    <Col md={10} xs={12}>
+                    <Col md={9} xs={12}>
                         <Row className="justify-content-md-center">
-                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 2}} xs={12}
-                                 style={{padding: '10px 5px'}}>
+                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 3}} xs={12}
+                                 style={{padding: '10px 5px', position: "relative"}}>
                                 <Row>Sort: </Row>
-                                <Row><DropdownTypes type='sort'/></Row>
+                                <Row><DropdownTypes type='sort' callback={e => sortCallback(e)}/></Row>
                             </Col>
-                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 2}} xs={12}
-                                 style={{padding: '10px 5px'}}>
+                            <Col md={{order: 'last', span: 3}} xl={{order: 'last', span: 3}} xs={12}
+                                 style={{padding: '10px 5px', position: "relative"}}>
                                 <Row>Paginate: </Row>
-                                <Row><DropdownTypes type='paginate'/></Row>
+                                <Row><DropdownTypes type='paginate' callback={e => paginateCallback(e)}/></Row>
                             </Col>
-                            <Col style={{display: "inline-block", alignSelf: "flex-end", padding: "5px"}}>
-                                <h3><CountNumberItem per={props.paginate} page={props.page} total={props.total} item="books"/></h3>
+                            <Col style={{display: "inline-block", alignSelf: "flex-end", padding: "10px 5px"}}>
+                                <h3><CountNumberItem paginate={paginate} page={page} total={total} item="books" /></h3>
                             </Col>
                         </Row>
                         <Row style={{padding: '10px 5px'}}>
-                            <GetBookShop query={queryBuilder()}/>
+                            <GetBookShop query={{
+                                'author': author,
+                                'category': category,
+                                'rating': rating,
+                                '_sort': _sort,
+                                'paginate': paginate,
+                                'page': page,
+                            }} callback={e => totalCallback(e)}/>
                         </Row>
                         <Row style={{padding: '10px 0vw'}}>
                             <Col md="auto">
-                                <Pagination defaultCurrent={props.page} total={props.total}/>
+                                <Pagination current={page} onChange={pageCallback} total={total} pageSize={paginate} showSizeChanger={false} />
                             </Col>
                         </Row>
                     </Col>

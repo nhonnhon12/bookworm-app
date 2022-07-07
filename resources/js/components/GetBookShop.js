@@ -11,6 +11,17 @@ import { Pagination, Autoplay, Navigation } from "swiper";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+function queryBuilder(props) { //build query for api
+    var q = '?';
+    props.author != 0 ? q += '&author=' + props.author: 1;
+    props.category != 0 ? q += '&category=' + props.category: 1;
+    props.rating != 0 ? q += '&rating=' + props.rating: 1;
+    props._sort !== 0 ? q += '&sort=' + props._sort: 1;
+    props.paginate !== 0 ? q += '&paginate=' + props.paginate: 1;
+    props.page !==0 ? q+= '&page=' + props.page: 1;
+    return q;
+}
+
 function GetBookShop(props){
     const [list, setList] = useState([]);
     const [total, setTotal] = useState(0);
@@ -18,7 +29,8 @@ function GetBookShop(props){
     useEffect(() => {
         let mounted = true;
         if (mounted) {
-            let link = '/api/books' + props.query;
+            let link = '/api/books' + queryBuilder(props.query);
+            console.log(link);
             axios.get(link)
                 .then(res => {
                     setList(res.data.data);
@@ -27,11 +39,17 @@ function GetBookShop(props){
                 .catch(error => console.log(error));
             mounted = false;
         }
-    },[] );
+    },[props] );
+
+    useEffect(()=>{
+        props.callback(total);
+        console.log(total+" t");
+    }, [total]);
+
 
     //show list of book in shop page (5 books per rows)
     return <>
-        <Container>
+        <Container style={{padding: "0px 0px"}}>
             <Row xs={2} lg={5} className="g-4">
                 {
                     list.map(book =>
