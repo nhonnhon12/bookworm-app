@@ -9,6 +9,7 @@ import Cart from "./components/Cart";
 import Shop from "./components/Shop";
 import About from "./components/About";
 import Error from "./components/Error";
+import BookDetail from "./components/BookDetail";
 
 const footerStyle = {
     display: 'flex',
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/shop" element={<Shop/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/cart" element={<Cart/>}/>
+                        <Route path="/shop/:id" element={<BookDetail/>}/>
                         <Route path="/" element={<Error/>}/>
                     </Routes>
                 </BrowserRouter>

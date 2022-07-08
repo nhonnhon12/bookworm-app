@@ -1,15 +1,18 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
 function Header(){
-    // var choosing = null;
-    // if(window.location.href.toString().includes("/shop")) choosing = document.getElementById('shop').style.fontWeight = "600";
-    // else if(window.location.href.toString().includes("/about")) choosing = document.getElementById('about').style.fontWeight = 'bold';
-    // else if(window.location.href.toString().includes("/cart")) choosing = document.getElementById('cart').style.fontWeight = 'bold';
-    // else if(window.location.href.toString().includes("/login")) choosing = document.getElementById('login').style.fontWeight = 'bold';
-    // else choosing = document.getElementById('home').style.fontWeight = 'bold';
-    // choosing.style.fontWeight = "600";
+    useEffect( () =>{
+        var choosing;
+        if(window.location.href.toString().includes("/shop")) choosing = document.getElementById('shop');
+        else if(window.location.href.toString().includes("/about")) choosing = document.getElementById('about');
+        else if(window.location.href.toString().includes("/cart")) choosing = document.getElementById('cart');
+        else if(window.location.href.toString().includes("/login")) choosing = document.getElementById('login');
+        else choosing = document.getElementById('home');
+        choosing.style.fontWeight = "600";
+        choosing.style.color = "white";
+    }, []);
 
     return <>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

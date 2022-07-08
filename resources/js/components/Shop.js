@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
 import AuthorFilter from "./AuthorFilter";
 import CategoryFilter from "./CategoryFilter";
@@ -19,15 +18,6 @@ function Shop() {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(10);
     console.log("render");
-
-    // let props = {
-    //     'author': 0,
-    //     'category': 0,
-    //     'rating': 0,
-    //     '_sort': 0,
-    //     'paginate': 5,
-    //     'page': 1,
-    // };
 
     const authorCallback = (i) => {
         setAuthor(i);
@@ -50,7 +40,7 @@ function Shop() {
     }
     const paginateCallback = (i) => {
         setPaginate(i);
-        if(page>=total/paginate) setPage(1);
+        if(page > total/paginate) setPage(1);
         console.log(paginate);
     }
     const pageCallback = (i, j) => {

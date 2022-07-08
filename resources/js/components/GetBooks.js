@@ -14,8 +14,6 @@ import "swiper/css/navigation";
 function GetBooks(props){
     const [list, setList] = useState([]);
 
-    console.log('1');
-
     useEffect(() => {
         let mounted = true;
         if (mounted) {
