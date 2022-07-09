@@ -127,12 +127,17 @@ h2{
     border-radius: 10px;
 }
 
+#book-detail h2{
+    padding-bottom: 5px;
+}
+
 #book-detail{
     border-radius: 20px;
     border-width: 1px;
     border-style: solid;
     border-color: lightgrey;
     padding: 20px 20px 10px 20px;
+    margin: 2px;
 }
 
 .home-component{
@@ -141,4 +146,32 @@ h2{
     border-style: solid;
     border-color: lightgrey;
     padding: 20px 20px 10px 20px;
+}
+
+#add-book{
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgrey;
+    padding: 0px;
+    margin: 2px;
+}
+
+#add-book h2{
+    border-radius: 20px 20px 0px 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgrey;
+    background: rgb(242,242,242);
+    padding: 20px 20px 10px 20px;
+    text-align: center;
+}
+
+#add-book-div{
+    margin: 5px;
+}
+
+#add-book-button{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

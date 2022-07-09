@@ -7,8 +7,9 @@ import HomeFeaturedBook from "./HomeFeaturedBook";
 
 function Home() {
     const [tab, setTab] = useState(0);
+    console.log("home tab = " + tab);
     return (
-        <>
+        <div style={{padding: '10px'}}>
             <Container>
                 <Row style={{padding: '80px 20px 3px 20px'}}>
                     <Col md={4}>
@@ -34,7 +35,7 @@ function Home() {
                             <Nav.Link eventKey="recommended" onSelect={()=>setTab(0)}>Recommended</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="Popular" onSelect={()=>setTab(1)}>Popular</Nav.Link>
+                            <Nav.Link eventKey="popular" onSelect={()=>setTab(1)}>Popular</Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Row>
@@ -42,6 +43,6 @@ function Home() {
             <Container className="home-component">
                 <HomeFeaturedBook tab={tab}/>
             </Container>
-        </>
+        </div>
     );
 } export default Home

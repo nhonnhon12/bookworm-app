@@ -23,11 +23,12 @@ function BookCard(props) {
                     <div>
                         {
                             props.rating !== null ?
-                                <StarRatings
+                                <><StarRatings
                                     rating={+props.rating}
                                     starDimension="14px"
                                     starSpacing="1px"
-                                /> : '(No review)'
+                                /> ({props.count})</>
+                                 : '(No review)'
                         }
 
                     </div>

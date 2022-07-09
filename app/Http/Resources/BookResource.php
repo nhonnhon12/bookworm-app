@@ -35,6 +35,13 @@ class BookResource extends JsonResource
         $rating = $rating->pluck("avg")->first();
         if($rating!=null) $rating=round($rating, 1);
 
+        //get count review
+        $counting = Review::groupBy('book_id')
+            ->where('book_id', $this->id)
+            ->selectRaw('count(rating_start)')
+            ->get();
+        $counting = $counting->pluck("count")->first();
+
         //return value
         return [
             'id' => $this->id,
@@ -46,6 +53,7 @@ class BookResource extends JsonResource
             'price' => $price,
             'original_price' => $this->book_price,
             'rating' => $rating,
+            'count' => $counting
         ];
     }
 }

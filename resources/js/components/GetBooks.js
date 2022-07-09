@@ -42,7 +42,7 @@ function GetBooks(props){
                 .catch(error => console.log(error));
             mounted = false;
         }
-    },[] );
+    },[props.type] );
 
     if(props.show !== 'carousel') {
         return <>
@@ -53,7 +53,7 @@ function GetBooks(props){
                             <Col className="book-card">
                                 <BookCard id={book.id} title={book.title} author={book.author}
                                           orginal_price={book.original_price} price={book.price}
-                                          image={book.photo} rating={book.rating}/>
+                                          image={book.photo} rating={book.rating} count = {book.count}/>
                             </Col>)
                     }
                 </Row>
@@ -91,7 +91,7 @@ function GetBooks(props){
                             <div className="book-card">
                                 <BookCard id={book.id} title={book.title} author={book.author}
                                           orginal_price={book.original_price} price={book.price}
-                                          image={book.photo} rating={book.rating}/>
+                                          image={book.photo} rating={book.rating} count = {book.count}/>
                             </div>
                         </SwiperSlide>
                     )

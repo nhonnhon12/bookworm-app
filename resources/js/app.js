@@ -21,7 +21,7 @@ function App() {
     return (
         <>
             <Header/>
-            <div style={{ minHeight: screen.height - 120 }}>
+            <div>
                 <BrowserRouter>
                     <Routes>
                         <Route exact path="/" element={<Home/>}/>
@@ -33,7 +33,7 @@ function App() {
                     </Routes>
                 </BrowserRouter>
             </div>
-            <Footer style={{position: "absolute", bottom: "0"}}/>
+            <Footer/>
         </>
     );
 } export default App;

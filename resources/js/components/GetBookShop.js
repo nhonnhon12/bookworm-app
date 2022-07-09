@@ -35,7 +35,7 @@ function GetBookShop(props){
         let mounted = true;
         if (mounted) {
             let link = '/api/books' + queryBuilder(props.query);
-            console.log(link);
+            // console.log(link);
             axios.get(link)
                 .then(res => {
                     setList(res.data.data);
@@ -61,7 +61,7 @@ function GetBookShop(props){
                         <Col className="book-card">
                             <BookCard id={book.id} title={book.title} author={book.author}
                                       orginal_price={book.original_price} price={book.price}
-                                      image={book.photo} rating={book.rating}/>
+                                      image={book.photo} rating={book.rating} count = {book.count}/>
                         </Col>)
                 }
             </Row>
