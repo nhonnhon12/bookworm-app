@@ -15,6 +15,6 @@ class AuthorController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Author::select('id', 'author_name')->get();
+        return Author::select('id', 'author_name')->orderBy('author_name')->get();
     }
 }

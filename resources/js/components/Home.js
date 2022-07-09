@@ -9,9 +9,9 @@ function Home() {
     const [tab, setTab] = useState(0);
     console.log("home tab = " + tab);
     return (
-        <div style={{padding: '10px'}}>
+        <div>
             <Container>
-                <Row style={{padding: '80px 20px 3px 20px'}}>
+                <Row style={{padding: '80px 40px 3px 40px'}}>
                     <Col md={4}>
                         <h1>On Sale</h1>
                     </Col>

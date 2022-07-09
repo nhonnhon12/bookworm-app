@@ -16,6 +16,6 @@ class CategoryController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Category::select('id', 'category_name')->get();
+        return Category::select('id', 'category_name')->orderBy('category_name')->get();
     }
 }

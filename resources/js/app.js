@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Route, Link, BrowserRouter, Routes, Navigate} from 'react-router-dom'
+import { Route, Link, BrowserRouter, Routes } from 'react-router-dom'
 import Header from "./components/Header";
 import {Container} from "react-bootstrap";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
-import Shop from "./components/Shop";
-import About from "./components/About";
+import Shop from "./components/Shop";import About from "./components/About";
 import Error from "./components/Error";
 import BookDetail from "./components/BookDetail";
 
@@ -21,7 +20,7 @@ function App() {
     return (
         <>
             <Header/>
-            <div>
+            <Container>
                 <BrowserRouter>
                     <Routes>
                         <Route exact path="/" element={<Home/>}/>
@@ -32,7 +31,7 @@ function App() {
                         <Route path="/" element={<Error/>}/>
                     </Routes>
                 </BrowserRouter>
-            </div>
+            </Container>
             <Footer/>
         </>
     );

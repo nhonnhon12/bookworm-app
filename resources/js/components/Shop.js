@@ -16,45 +16,38 @@ function Shop() {
     const [_sort, setSort] = useState('price-asc');
     const [paginate, setPaginate] = useState(5);
     const [page, setPage] = useState(1);
-    const [total, setTotal] = useState(10);
-    console.log("render");
+    const [total, setTotal] = useState(null);
 
     const authorCallback = (i) => {
         setAuthor(i);
         setPage(1);
-        console.log(author);
     }
     const categoryCallback = (i) => {
         setCategory(i);
         setPage(1);
-        console.log(category);
     }
     const ratingCallback = (i) => {
         setRating(i);
         setPage(1);
-        console.log(rating);
     }
     const sortCallback = (i) => {
         setSort(i);
-        console.log(_sort);
+        setPage(1);
     }
     const paginateCallback = (i) => {
         setPaginate(i);
-        if(page > total/paginate) setPage(1);
-        console.log(paginate);
+        setPage(1);
     }
     const pageCallback = (i, j) => {
         setPage(i);
-        console.log("page: " + page);
     }
     const totalCallback = (i) => {
         setTotal(i);
-        console.log("total: " + total);
     }
 
     return (
         <>
-            <Container style={{padding: '3vw 0vw'}}>
+            <Container style={{padding: '3vw 0vw', minHeight: '50vh'}}>
                 <Row>
                     <Col md={2} xs={12}>
                         <Row>
@@ -89,7 +82,10 @@ function Shop() {
                                 <Row style={{margin: 'auto'}}><DropdownTypes type='paginate' callback={e => paginateCallback(e)}/></Row>
                             </Col>
                             <Col style={{display: "inline-block", alignSelf: "flex-end", padding: "10px 5px"}}>
-                                <h3><CountNumberItem paginate={paginate} page={page} total={total} item="books" /></h3>
+                                <h3>
+                                    {total===0? "No available book!":
+                                    <CountNumberItem paginate={paginate} page={page} total={total} item="books" />}
+                                </h3>
                             </Col>
                         </Row>
                         <Row style={{padding: '10px 5px'}}>

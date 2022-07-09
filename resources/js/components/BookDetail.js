@@ -1,4 +1,4 @@
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
@@ -6,6 +6,8 @@ import '../../css/app.css'
 
 function BookDetail(props){
     const [book, setBook] = useState(null);
+    const [quantity, setQuantity] = useState(0);
+    const [alert, setAlert] = useState(false);
 
     let id = useParams().id;
     useEffect(() => {
@@ -20,6 +22,24 @@ function BookDetail(props){
             mounted = false;
         }
     },[] );
+
+    const changeQuantity = (e) => {
+        if(e.target.value < 0) {
+            setQuantity(0);
+        }
+        else if(e.target.value > 8){
+            setQuantity(8);
+            setAlert(true);
+            setTimeout(
+                () => {
+                    setAlert(false);
+                },
+                3000
+            );
+        }
+        else setQuantity(e.target.value);
+
+    }
 
     if(book !== null) return<>
         <Container>
@@ -62,7 +82,10 @@ function BookDetail(props){
                             <Row>
                                 <Form.Group style={{padding:"0"}}>
                                     <Form.Label>Quantity</Form.Label>
-                                    <Form.Control type="number" defaultValue="0" />
+                                    <Form.Control type="number" value={quantity} onChange={changeQuantity} id="quantity"/>
+                                    <Alert key="light" variant="light" show={alert} style={{marginTop:"5px"}}>
+                                        Maximum of quantity is 8 books.
+                                    </Alert>
                                 </Form.Group>
                             </Row>
                             <Row>

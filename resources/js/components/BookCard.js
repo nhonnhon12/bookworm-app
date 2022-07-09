@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {Button, Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import '../../css/app.css'
-import StarRatings from "react-star-ratings/build/star-ratings";
 import AuthorFilter from "./AuthorFilter";
+import {Rate} from "antd";
 
 function BookCard(props) {
     return <>
@@ -23,11 +23,8 @@ function BookCard(props) {
                     <div>
                         {
                             props.rating !== null ?
-                                <><StarRatings
-                                    rating={+props.rating}
-                                    starDimension="14px"
-                                    starSpacing="1px"
-                                /> ({props.count})</>
+                                <><Rate disabled defaultValue={+props.rating} style={{ color: 'gray', fontSize: '14px' }}/>
+                                    &nbsp;({props.count})</>
                                  : '(No review)'
                         }
 
