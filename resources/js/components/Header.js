@@ -1,8 +1,13 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+import axios from "axios";
+import {useSelector} from "react-redux";
 
 function Header(){
+    const cart = useSelector((state) => state.cart.items);
+    const [count, setCount] = useState(0);
+
     useEffect( () =>{
         var choosing;
         if(window.location.href.toString().includes("/shop") || window.location.href.toString().includes("/book")) choosing = document.getElementById('shop');
@@ -13,6 +18,16 @@ function Header(){
         choosing.style.fontWeight = "600";
         choosing.style.color = "white";
     }, []);
+
+    useEffect(() => {
+        var c = 0;
+        for(var i = 0; i < cart.length; i++){
+            if(cart[i].num !== 0) {
+                c += +cart[i].num;
+            }
+        }
+        setCount(c);
+    }, [cart]);
 
     return <>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -35,7 +50,7 @@ function Header(){
                         <Nav.Link href="/about" id = 'about'>About</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="/cart" id = 'cart'>Cart</Nav.Link>
+                        <Nav.Link href="/cart" id = 'cart'>Cart ({count})</Nav.Link>
                         <Nav.Link href="/login" id = 'login'>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

@@ -16,6 +16,16 @@ class PriceController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $listId = explode(',', $request->get('id'));
+        $listNum = explode(',', $request->get('num'));
+        $price = 0;
+        for($i=0; $i < count($listId); $i++){
+            if($listNum[$i] !== '') $price += $listNum[$i] * $this->getPrice($listId[$i]);
+        }
+        return $price;
+    }
+
+    public function getPrice($id){
         $price = Discount::query()
             ->where('discount_start_date', '<=', date('Y-m-d'))
             ->where(function ($query){
@@ -24,7 +34,11 @@ class PriceController extends Controller
             })
             ->groupBy('book_id')
             ->selectRaw('book_id, min(discount_price) as p');
-        $book = Book::query()->leftJoinSub($price, 'd', 'book.id', 'd.book_id')->select('book.id')->selectRaw('coalesce(d.p, book_price) as price')->get();
-        return $book;
+        $book = Book::query()
+            ->leftJoinSub($price, 'd', 'book.id', 'd.book_id')
+            ->selectRaw('coalesce(d.p, book_price) as price')
+            ->where('book.id', $id)
+            ->first();
+        return $book->price;
     }
 }

@@ -1,60 +1,95 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectCart} from "./redux/cartSlice";
-import {Col, Row} from "react-bootstrap";
+import {setItem} from "./redux/cartSlice";
+import {Col, Form, ListGroup, Row, Toast} from "react-bootstrap";
 import axios from "axios";
 import "../../css/app.css"
 
-function CartItem(props){
+function CartItem(props) {
     const [quantity, setQuantity] = useState(props.num);
-    const [cart, setCard] = useState(useSelector(selectCart));
-    const id = props.id;
-    const dispatch = useDispatch();
     const [show, setShow] = useState(false)
     const [book, setBook] = useState(null)
+    const id = props.id;
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            const link = '/api/books/' + id;
-            axios.get(link)
-                .then(res => {
-                    setBook(res.data);
-                })
-                .catch(error => console.log(error));
-            mounted = false;
+        if(props.num > 0) {
+            let mounted = true;
+            if (mounted) {
+                const link = '/api/books/' + id;
+                axios.get(link)
+                    .then(res => {
+                        setBook(res.data);
+                    })
+                    .catch(error => console.log(error));
+                mounted = false;
+            }
         }
-    },[] );
+    }, []);
 
-    useEffect(()=>{
-        if(quantity === 0) setShow(false);
+    useEffect(() => {
+        if (quantity <= 0) setShow(false);
         else setShow(true);
     }, [quantity]);
 
-    if(book===null || show===false) return <></>;
+    const changeQuantity = (e) =>{
+        if (e.target.value <= 0) {
+            setQuantity(0);
+            dispatch(setItem({id: book.id, num: 0}));
+        } else if (e.target.value > 8) {
+            setQuantity(8);
+        } else {
+            setQuantity(e.target.value);
+            dispatch(setItem({id: book.id, num: e.target.value}));
+        }
+    }
+
+    if (book === null || show === false) return <></>;
     else return <>
-        <Row id="cart-item">
-            <Col md={8}>
-                <Row>
-                    <Col md={2}>
-                        <img src={require('./../../assets/bookcover/' + book.photo + '.jpg').default} className="img-fluid rounded-start" alt="book photo"/>
-                    </Col>
-                    <Col md={10}>
-                        {book.title}
-                        <br/>
-                        {book.author}
-                    </Col>
-                </Row>
-            </Col>
-            <Col md={1}>
-
-            </Col>
-            <Col md={2}>
-
-            </Col>
-            <Col md={1}>
-
-            </Col>
-        </Row>
+        <ListGroup.Item id="cart-item">
+            <Row>
+                <Col md={6}>
+                    <Row>
+                        <Col md={3}>
+                            <img src={require('./../../assets/bookcover/' + book.photo + '.jpg').default}
+                                 className="img-fluid rounded-start" alt="book photo"/>
+                        </Col>
+                        <Col md={9} className="center-vertical">
+                            <p>
+                                <b>
+                                    {book.title}
+                                </b>
+                                <br/>
+                                {book.author}
+                            </p>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col md={2} className="center-vertical">
+                    <p style={{margin: '0px'}}>
+                        {
+                            book.price !== null &&
+                            <small>
+                                <del>
+                                    ${book.original_price}
+                                </del>
+                                <br/>
+                            </small>
+                        }
+                        <strong>${book.price !== null ? book.price : book.original_price}</strong>
+                    </p>
+                </Col>
+                <Col md={2} className="center-vertical">
+                    <Form.Control type="number"
+                                   value={quantity+""} onChange={changeQuantity}
+                    />
+                </Col>
+                <Col md={2} className="center-vertical">
+                    <strong>
+                        ${((+quantity) * (book.price!==null? +book.price : +book.original_price)).toFixed(2)}
+                    </strong>
+                </Col>
+            </Row>
+        </ListGroup.Item>
     </>;
 }export default CartItem;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import "bootstrap/dist/css/bootstrap.css";
-import {Button, Col, Container, Nav, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Nav, Row} from "react-bootstrap";
 import GetBooks from "./GetBooks";
 import HomeFeaturedBook from "./HomeFeaturedBook";
 
@@ -21,8 +21,12 @@ function Home() {
                     </Col>
                 </Row>
             </Container>
-            <Container className="home-component">
-                <GetBooks type="get-top-discount" show='carousel'/>
+            <Container>
+                <Card>
+                    <Card.Body>
+                        <GetBooks type="get-top-discount" show='carousel'/>
+                    </Card.Body>
+                </Card>
             </Container>
             <Container>
                 <Row style={{padding: '50px 20px 3px 20px'}}>
@@ -39,8 +43,12 @@ function Home() {
                     </Nav>
                 </Row>
             </Container>
-            <Container className="home-component">
-                <HomeFeaturedBook tab={tab}/>
+            <Container>
+                <Card>
+                    <Card.Body>
+                        <HomeFeaturedBook tab={tab}/>
+                    </Card.Body>
+                </Card>
             </Container>
         </>
     );
