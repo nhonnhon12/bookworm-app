@@ -1,14 +1,16 @@
 import React, {Component, useEffect, useState} from "react";
-import {Alert, Button, Card, Col, Container, Form, ListGroup, Nav, Navbar, Row} from "react-bootstrap";
+import {Alert, Button, Card, Col, Container, Form, ListGroup, Modal, Nav, Navbar, Row} from "react-bootstrap";
 import CartItem from "./CartItem";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCart} from "./redux/cartSlice";
 import axios from "axios";
+import Login from "./Login";
 
 function Cart() {
     const cart = useSelector((state) => state.cart.items);
     const [total, setTotal] = useState(0);
     const [count, setCount] = useState(0);
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
         let mounted = true;
@@ -34,9 +36,13 @@ function Cart() {
         }
     }, [cart]);
 
+    const placeOrder = () =>{
+        setModal(true);
+    }
+
     return <>
         <Container>
-            <Row style={{paddingTop: '40px', paddingLeft: '10px'}}>
+            <Row style={{paddingLeft: '10px'}}>
                 <h2><b>Your cart: {count} items</b></h2>
             </Row>
             <Row>
@@ -69,24 +75,28 @@ function Cart() {
                 </Col>
                 <Col lg={3} sm={12}>
                     <Card>
-                        <Card.Header>
+                        <Card.Header align="center">
                                 <b>
                                     Cart totals
                                 </b>
                         </Card.Header>
-                        <Card.Body>
+                        <Card.Body style={{margin: '10px'}}>
                             <Row>
                                 <h3 align="center">
                                     ${total}
                                 </h3>
                             </Row>
                             <Row>
-                                <Button type="primary" id="cart-order-button"> Place order</Button>
+                                <Button type="primary" id="cart-order-button" onClick={placeOrder}> Place order</Button>
                             </Row>
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
         </Container>
+
+        <Modal show={modal} animation={true} onHide={() => setModal(false)}>
+            <Login/>
+        </Modal>
     </>
 } export default Cart;

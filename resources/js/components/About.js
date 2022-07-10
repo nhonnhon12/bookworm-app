@@ -7,7 +7,6 @@ const style={
         textTransform: "none !important",
     },
     header:{
-        paddingTop: "50px",
         paddingBottom: "5px",
         borderBottomStyle: "solid",
         borderBottomWidth: "1px",

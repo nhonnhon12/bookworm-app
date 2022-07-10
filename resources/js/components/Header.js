@@ -13,7 +13,7 @@ function Header(){
         if(window.location.href.toString().includes("/shop") || window.location.href.toString().includes("/book")) choosing = document.getElementById('shop');
         else if(window.location.href.toString().includes("/about")) choosing = document.getElementById('about');
         else if(window.location.href.toString().includes("/cart")) choosing = document.getElementById('cart');
-        else if(window.location.href.toString().includes("/login")) choosing = document.getElementById('login');
+        else if(window.location.href.toString().includes("/login") || window.location.href.toString().includes("/register")) choosing = document.getElementById('login');
         else choosing = document.getElementById('home');
         choosing.style.fontWeight = "600";
         choosing.style.color = "white";
@@ -30,7 +30,7 @@ function Header(){
     }, [cart]);
 
     return <>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{marginBottom: '30px'}}>
             <Container>
                 <Navbar.Brand href="/">
                     <img

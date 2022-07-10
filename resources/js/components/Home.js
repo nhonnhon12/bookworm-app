@@ -10,7 +10,7 @@ function Home() {
     return (
         <>
             <Container>
-                <Row style={{padding: '80px 40px 3px 40px'}}>
+                <Row style={{padding: '0px 40px 3px 40px'}}>
                     <Col md={4}>
                         <h1>On Sale</h1>
                     </Col>

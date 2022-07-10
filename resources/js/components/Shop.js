@@ -46,7 +46,7 @@ function Shop() {
 
     return (
         <>
-            <Container style={{padding: '3vw 0vw', minHeight: '50vh'}}>
+            <Container style={{padding: '0vw', minHeight: '50vh'}}>
                 <Row>
                     <Col md={2} xs={12}>
                         <Row className="justify-content-md-center">

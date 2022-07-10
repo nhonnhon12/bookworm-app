@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setItem} from "./redux/cartSlice";
-import {Col, Form, ListGroup, Row, Toast} from "react-bootstrap";
+import {Button, Col, Form, ListGroup, Modal, Row, Toast} from "react-bootstrap";
 import axios from "axios";
 import "../../css/app.css"
 
 function CartItem(props) {
     const [quantity, setQuantity] = useState(props.num);
-    const [show, setShow] = useState(false)
-    const [book, setBook] = useState(null)
+    const [show, setShow] = useState(false);
+    const [book, setBook] = useState(null);
+    const [modal, setModal] = useState(false);
     const id = props.id;
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(props.num > 0) {
+            setShow(true);
             let mounted = true;
             if (mounted) {
                 const link = '/api/books/' + id;
@@ -27,21 +29,20 @@ function CartItem(props) {
         }
     }, []);
 
-    useEffect(() => {
-        if (quantity <= 0) setShow(false);
-        else setShow(true);
-    }, [quantity]);
+    const blurQuantity = (e) =>{
+        dispatch(setItem({id: book.id, num: quantity}));
+        if(quantity <= 0) {
+            setModal(true);
+        }
+    }
 
     const changeQuantity = (e) =>{
         if (e.target.value <= 0) {
             setQuantity(0);
-            dispatch(setItem({id: book.id, num: 0}));
         } else if (e.target.value > 8) {
             setQuantity(8);
-        } else {
-            setQuantity(e.target.value);
-            dispatch(setItem({id: book.id, num: e.target.value}));
         }
+        else setQuantity(e.target.value);
     }
 
     if (book === null || show === false) return <></>;
@@ -50,19 +51,23 @@ function CartItem(props) {
             <Row>
                 <Col md={6}>
                     <Row>
-                        <Col md={3}>
-                            <img src={require('./../../assets/bookcover/' + book.photo + '.jpg').default}
-                                 className="img-fluid rounded-start" alt="book photo"/>
-                        </Col>
-                        <Col md={9} className="center-vertical">
-                            <p>
-                                <b>
-                                    {book.title}
-                                </b>
-                                <br/>
-                                {book.author}
-                            </p>
-                        </Col>
+                            <Col md={3}>
+                                <a href={'/book/' + id} target="_blank">
+                                <img src={require('./../../assets/bookcover/' + book.photo + '.jpg').default}
+                                     className="img-fluid rounded-start" alt="book photo"/>
+                                </a>
+                            </Col>
+                            <Col md={9} className="center-vertical">
+                                <p>
+                                    <a href={'/book/' + id} target="_blank">
+                                        <b style={{color: 'black'}}>
+                                            {book.title}
+                                        </b>
+                                    </a>
+                                    <br/>
+                                    {book.author}
+                                </p>
+                            </Col>
                     </Row>
                 </Col>
                 <Col md={2} className="center-vertical">
@@ -81,7 +86,9 @@ function CartItem(props) {
                 </Col>
                 <Col md={2} className="center-vertical">
                     <Form.Control type="number"
-                                   value={quantity+""} onChange={changeQuantity}
+                                  value={quantity+""}
+                                  onBlur={blurQuantity}
+                                  onChange={changeQuantity}
                     />
                 </Col>
                 <Col md={2} className="center-vertical">
@@ -91,5 +98,20 @@ function CartItem(props) {
                 </Col>
             </Row>
         </ListGroup.Item>
+
+        <Modal show={modal} animation={true}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Do you want to remove this product from cart?</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => {setModal(false); setQuantity(1);}}>
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={() => {setModal(false); setShow(false);}}>
+                    Yes
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </>;
 }export default CartItem;

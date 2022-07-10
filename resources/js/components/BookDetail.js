@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import '../../css/app.css'
 import {useDispatch, useSelector} from "react-redux";
 import {selectCart, setItem} from "./redux/cartSlice";
+import {Rate} from "antd";
 
 function BookDetail(props) {
     const [book, setBook] = useState(null);
@@ -56,7 +57,7 @@ function BookDetail(props) {
 
     if (book !== null) return <>
         <Container>
-            <Row style={{paddingTop: '40px', paddingLeft: '10px'}}>
+            <Row style={{paddingLeft: '10px'}}>
                 <h2><b>{book.category}</b></h2>
             </Row>
             <Row>
@@ -83,7 +84,7 @@ function BookDetail(props) {
                 <Col lg={4} sm={12}>
                     <Card>
                         <Card.Header align="center">
-                            <h2 style={{margin: '0px'}}>
+                            <h2 style={{margin: '5px'}}>
                                 {
                                     book.price !== null &&
                                     <small>
@@ -122,10 +123,28 @@ function BookDetail(props) {
                 <Col lg={4} sm={12}>
                     <Card>
                         <Card.Header>
-                            Write a review
+                            <h2 style={{margin: '5px'}}><strong>
+                                Write a review
+                            </strong></h2>
                         </Card.Header>
                         <Card.Body>
-                            Review Form
+                            <Form>
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Label>Product rating</Form.Label>
+                                    <Rate style={{display: 'block'}}
+                                          // value={5}
+                                          // onChange={setValue}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Label>Review title</Form.Label>
+                                    <Form.Control type="text" placeholder="Add a title" />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>Review details</Form.Label>
+                                    <Form.Control as="textarea" rows={3} placeholder="Detail please! Your review helps other shopers!" />
+                                </Form.Group>
+                            </Form>
                         </Card.Body>
                         <Card.Footer>
                             <Button type="primary" id="add-book-button" onClick={addBook}> Submit review </Button>
