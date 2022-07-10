@@ -74,16 +74,16 @@ function About() {
                                 Our Vision
                             </Row>
                             <Row style={style.text2}>
-                                The name Bookworm was taken from the
-                                original name for New York International AirPort,
-                                which was renamed JFK in December 1963.
+                                One of the last travel bookstores in the country,
+                                our Manhattan store carries a range of
+                                guidebooks (all 10% off) to suit the needs and
+                                tastes of every traveler and budget.
                                 <br/>
-                                Our Manhattan store has just moved to the
-                                West Village. Our new locations is 170 7th
-                                Avenue South, at the corner of Perry Street.
-                                <br/>
-                                From March 2008 through May 2016, the store
-                                was located in the Flatiron District.
+                                We believe that a novel or travelogue can be
+                                just as valuable a key to a place as any
+                                guidebook, and our well-read, well-traveled staff
+                                if happy to make reading recommendations for
+                                any traveler, book lover, or gift giver.
                             </Row>
                         </Col>
                     </Row>

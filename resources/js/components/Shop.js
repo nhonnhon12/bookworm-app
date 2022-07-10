@@ -7,7 +7,6 @@ import {Pagination} from "antd";
 import 'antd/dist/antd.css';
 import GetBookShop from "./GetBookShop";
 import CountNumberItem from "./CountNumberItem";
-import {value} from "lodash/seq";
 
 function Shop() {
     const [author, setAuthor] = useState(0);
@@ -50,20 +49,20 @@ function Shop() {
             <Container style={{padding: '3vw 0vw', minHeight: '50vh'}}>
                 <Row>
                     <Col md={2} xs={12}>
-                        <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                        <Row className="justify-content-md-center">
+                            <Col style={{padding: '10px 5px'}}>
                                 <Row style={{margin: 'auto'}}>Author: </Row>
                                 <Row style={{margin: 'auto'}}><AuthorFilter authorCallback={e => authorCallback(e)} /></Row>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                        <Row className="justify-content-md-center">
+                            <Col style={{padding: '10px 5px'}}>
                                 <Row style={{margin: 'auto'}}>Category: </Row>
                                 <Row style={{margin: 'auto'}}><CategoryFilter categoryCallback={e => categoryCallback(e)}/></Row>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md="auto" style={{padding: '10px 5px'}}>
+                        <Row className="justify-content-md-center">
+                            <Col style={{padding: '10px 5px'}}>
                                 <Row style={{margin: 'auto'}}>Rating: </Row>
                                 <Row style={{margin: 'auto'}}><DropdownTypes type='rating' callback={e => ratingCallback(e)}/></Row>
                             </Col>

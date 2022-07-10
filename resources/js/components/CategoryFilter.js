@@ -35,9 +35,9 @@ function CategoryFilter(props){
                 <Select.Option key="0" value="0">All Categories</Select.Option>
                 {
                     data.map(item =>
-                        <Option key={item.id} value={item.id}>
+                        <Select.Option key={item.id} value={item.id}>
                             {item.category_name}
-                        </Option>
+                        </Select.Option>
                     )
                 }
         </Select>

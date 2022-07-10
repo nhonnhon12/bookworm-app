@@ -19,9 +19,9 @@ function DropdownTypes(props) {
                     defaultValue="All Rating"
                     optionFilterProp="children"
                     filterOption={(input, option) => option.children.includes(input)}
-                    filterSort={(optionA, optionB) =>
-                        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                    }
+                    // filterSort={(optionA, optionB) =>
+                    //     optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    // }
                     onChange={(value) => props.callback(value)}
                 >
                     <Select.Option key="0" value="0">All Rating</Select.Option>
@@ -42,9 +42,9 @@ function DropdownTypes(props) {
                     defaultValue="Price Up"
                     optionFilterProp="children"
                     filterOption={(input, option) => option.children.includes(input)}
-                    filterSort={(optionA, optionB) =>
-                        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                    }
+                    // filterSort={(optionA, optionB) =>
+                    //     optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    // }
                     onChange={(value) => props.callback(value)}
                 >
                     <Select.Option key="1" value="price-asc">Price Up</Select.Option>
@@ -63,12 +63,12 @@ function DropdownTypes(props) {
                     defaultValue="05 per page"
                     optionFilterProp="children"
                     filterOption={(input, option) => option.children.includes(input)}
-                    filterSort={(optionA, optionB) =>
-                        optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                    }
+                    // filterSort={(optionA, optionB) =>
+                    //     optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    // }
                     onChange={(value) => props.callback(value)}
                 >
-                    <Select.Option key="1" value="5">05 per page</Select.Option>
+                    <Select.Option key="1" value="5">5 per page</Select.Option>
                     <Select.Option key="2" value="15">15 per page</Select.Option>
                     <Select.Option key="3" value="20">20 per page</Select.Option>
                     <Select.Option key="4" value="25">25 per page</Select.Option>

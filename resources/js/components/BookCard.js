@@ -8,12 +8,12 @@ import {Rate} from "antd";
 function BookCard(props) {
     return <>
         <Card>
-            <Link to={"/shop/" + props.id} style={{textDecoration: 'none'}}>
+            <Link to={"/book/" + props.id} style={{textDecoration: 'none'}}>
                 <Card.Img variant="top" src={require('./../../assets/bookcover/' + props.image + '.jpg').default}
                           id="card-img"/>
             </Link>
             <Card.Body>
-                <Link to={"/shop/" + props.id} style={{textDecoration: 'none'}}>
+                <Link to={"/book/" + props.id} style={{textDecoration: 'none'}}>
                     <Card.Title id="card-title">
                         {props.title}
                     </Card.Title>

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "bootstrap/dist/css/bootstrap.css";
-import BookCard from "./BookCard";
 import {Button, Col, Container, Nav, Row} from "react-bootstrap";
 import GetBooks from "./GetBooks";
 import HomeFeaturedBook from "./HomeFeaturedBook";
@@ -9,7 +8,7 @@ function Home() {
     const [tab, setTab] = useState(0);
     console.log("home tab = " + tab);
     return (
-        <div>
+        <>
             <Container>
                 <Row style={{padding: '80px 40px 3px 40px'}}>
                     <Col md={4}>
@@ -43,6 +42,6 @@ function Home() {
             <Container className="home-component">
                 <HomeFeaturedBook tab={tab}/>
             </Container>
-        </div>
+        </>
     );
 } export default Home

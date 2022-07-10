@@ -5,6 +5,7 @@ import {Col, Container, Row} from "react-bootstrap";
 const footerStyle={
     backgroundColor: "rgb(242,242,242)",
     padding: "80px",
+    minHeight: "25vh",
     marginTop: "50px"
 }
 function Footer() {

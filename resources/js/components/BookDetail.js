@@ -3,13 +3,18 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import '../../css/app.css'
+import {useDispatch, useSelector} from "react-redux";
+import {selectCart, setItem} from "./redux/cartSlice";
 
 function BookDetail(props){
     const [book, setBook] = useState(null);
     const [quantity, setQuantity] = useState(0);
     const [alert, setAlert] = useState(false);
-
     let id = useParams().id;
+
+    const cart = useSelector(selectCart);
+    const dispatch = useDispatch();
+
     useEffect(() => {
         let mounted = true;
         if (mounted) {
@@ -21,7 +26,16 @@ function BookDetail(props){
                 .catch(error => console.log(error));
             mounted = false;
         }
+        var i = 0;
+        for (i = 0; i < cart.length; i++){
+            if(cart[i].id == id) break;
+        }
+        if(i!==cart.length) setQuantity(cart[i].num);
     },[] );
+
+    const addBook = () =>{
+        dispatch(setItem({id: book.id, num: quantity}));
+    }
 
     const changeQuantity = (e) => {
         if(e.target.value < 0) {
@@ -37,8 +51,9 @@ function BookDetail(props){
                 3000
             );
         }
-        else setQuantity(e.target.value);
-
+        else {
+            setQuantity(e.target.value);
+        }
     }
 
     if(book !== null) return<>
@@ -89,7 +104,7 @@ function BookDetail(props){
                                 </Form.Group>
                             </Row>
                             <Row>
-                                <Button type="primary" id="add-book-button"> Add to cart </Button>
+                                <Button type="primary" id="add-book-button" onClick={addBook}> Add to cart </Button>
                             </Row>
                         </Container>
                     </div>
