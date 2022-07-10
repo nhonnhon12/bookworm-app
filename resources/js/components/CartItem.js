@@ -30,19 +30,20 @@ function CartItem(props) {
     }, []);
 
     const blurQuantity = (e) =>{
-        dispatch(setItem({id: book.id, num: quantity}));
-        if(quantity <= 0) {
-            setModal(true);
-        }
+
     }
 
     const changeQuantity = (e) =>{
         if (e.target.value <= 0) {
             setQuantity(0);
+            setModal(true);
         } else if (e.target.value > 8) {
             setQuantity(8);
         }
-        else setQuantity(e.target.value);
+        else {
+            setQuantity(e.target.value);
+            dispatch(setItem({id: book.id, num: e.target.value}));
+        }
     }
 
     if (book === null || show === false) return <></>;
@@ -100,15 +101,15 @@ function CartItem(props) {
         </ListGroup.Item>
 
         <Modal show={modal} animation={true}>
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
             <Modal.Body>Do you want to remove this product from cart?</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => {setModal(false); setQuantity(1);}}>
+                <Button variant="secondary" onClick={() => {setModal(false); setQuantity(1); dispatch(setItem({id: book.id, num: 1}));}}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={() => {setModal(false); setShow(false);}}>
+                <Button variant="primary" onClick={() => {setModal(false); setShow(false); dispatch(setItem({id: book.id, num: 0}));}}>
                     Yes
                 </Button>
             </Modal.Footer>
