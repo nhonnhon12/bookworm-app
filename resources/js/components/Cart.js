@@ -1,17 +1,62 @@
 import React, {Component, useEffect, useState} from "react";
-import {Alert, Button, Card, Col, Container, Form, ListGroup, Modal, Nav, Navbar, Row} from "react-bootstrap";
+import {
+    Alert,
+    Button,
+    Card,
+    Col,
+    Container,
+    Form,
+    ListGroup,
+    Modal,
+    ModalBody,
+    Nav,
+    Navbar,
+    Row
+} from "react-bootstrap";
 import CartItem from "./CartItem";
 import {useDispatch, useSelector} from "react-redux";
-import {selectCart} from "./redux/cartSlice";
+import {selectCart, selectList, setEmpty} from "./redux/cartSlice";
 import axios from "axios";
 import Login from "./Login";
+import {setId} from "./redux/userSlice";
 
 function Cart() {
     const cart = useSelector((state) => state.cart.items);
+    const user = useSelector((state) => state.user.id);
+    const dispatch = useDispatch();
+
     const [total, setTotal] = useState(0);
     const [count, setCount] = useState(0);
     const [modal, setModal] = useState(false);
+    const [order, setOrder] = useState(false);
+    const [messageHeader, setMessageHeader] = useState('');
+    const [messageBody, setMessageBody] = useState('');
+    const [state, setState] = useState(false);
+    const [timing, setTiming] = useState(10);
+    const [success, setSuccess] = useState(false);
 
+    const orderFunction = () =>{
+        if(state === true) {
+            setSuccess(true);
+            setTiming(10);
+        }
+        setOrder(false);
+    }
+
+    const cartList = (c) => {
+        var listId = '';
+        var listNum = '';
+        for(var i = 0; i < c.length; i++){
+            if(c[i].num !== 0){
+                listId += c[i].id + ',';
+                listNum += c[i].num + ',';
+            }
+        }
+        return({
+            id: listId,
+            num: listNum,
+        });
+    }
     useEffect(() => {
         let mounted = true;
         if (mounted) {
@@ -38,7 +83,40 @@ function Cart() {
     }, [cart]);
 
     const placeOrder = () =>{
-        setModal(true);
+        if(count === 0) {
+            setMessageHeader("Cannot place order");
+            setMessageBody("Your cart is empty!");
+            setOrder(true);
+        }
+        else{
+            if (user === -1) {
+                setModal(true);
+            } else {
+                const link = '/api/cart?id=' + cartList(cart).id + '&num=' + cartList(cart).num;
+                console.log(link);
+                axios.post(link)
+                    .then(response => {
+                        if (response) {
+                            setMessageHeader(response.data.header);
+                            setMessageBody(response.data.body);
+                            setOrder(true);
+                            if (response.data.state === true) {
+                                dispatch(setEmpty());
+                                setState(true);
+
+                            } else {
+                                const errorList = response.data.error;
+                                setState(false);
+                                errorList.forEach(i => {
+                                    dispatch(selectCart({id: i, num: 0}))
+                                });
+                            }
+                        }
+                    }).catch(error => {
+                    console.log(error.response);
+                });
+            }
+        }
     }
 
     useEffect(()=>{
@@ -103,6 +181,33 @@ function Cart() {
                animation={true}
                onHide={() => setModal(false)}>
             <Login setModal={setModal}/>
+        </Modal>
+        <Modal show={order}
+               animation={true}
+               onHide={()=> setOrder(false)}>
+            <Modal.Header>
+                <Modal.Title>
+                    {messageHeader}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {messageBody}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={orderFunction}>OK!</Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={success}
+               animation={true}>
+            <Modal.Header>
+                <Modal.Title>
+                    We're taking your order
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                Thanks for ordering. You will be redirected to the homepage in {timing} seconds!
+            </Modal.Body>
         </Modal>
     </>
 } export default Cart;

@@ -9,12 +9,17 @@ class Order extends Model
 {
     use HasFactory;
 
-    const UPDATED_AT = 'review_date';
+    const UPDATED_AT = 'order_date';
+    const CREATED_AT = 'order_date';
     public $timestamps = true;
     protected $table = 'order';
     protected $primaryKey = 'id';
     public  $incrementing = true;
 
+    protected $fillable = [
+        'user_id',
+        'order_amount'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

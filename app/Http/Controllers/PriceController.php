@@ -12,9 +12,14 @@ class PriceController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return float|int
      */
     public function __invoke(Request $request)
+    {
+        return $this->calculatePrice($request);
+    }
+
+    public function calculatePrice($request): float|int
     {
         $listId = explode(',', $request->get('id'));
         $listNum = explode(',', $request->get('num'));
@@ -39,6 +44,7 @@ class PriceController extends Controller
             ->selectRaw('coalesce(d.p, book_price) as price')
             ->where('book.id', $id)
             ->first();
+        if($book == null) return 0;
         return $book->price;
     }
 }

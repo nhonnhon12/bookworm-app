@@ -13,6 +13,12 @@ class OrderItem extends Model
     protected $table = 'order_item';
     protected $primaryKey = 'id';
     public  $incrementing = true;
+    protected $fillable = [
+        'order_id',
+        'book_id',
+        'quantity',
+        'price',
+    ];
 
     public function order()
     {
