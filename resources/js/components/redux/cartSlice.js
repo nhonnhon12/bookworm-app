@@ -1,10 +1,9 @@
 import {createSelector, createSlice} from '@reduxjs/toolkit'
-import {forEach} from "lodash";
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        items: JSON.parse(localStorage.getItem('book-cart')),
+        items: JSON.parse(localStorage.getItem('book-cart')) || [],
     },
     reducers: {
         setItem: (state, action) => {
