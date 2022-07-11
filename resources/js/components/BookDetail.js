@@ -160,7 +160,7 @@ function BookDetail(props) {
             <Modal.Body>Update cart successfully!</Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => {setModal(false);}}>
-                    Close
+                    OK!
                 </Button>
             </Modal.Footer>
         </Modal>

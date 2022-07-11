@@ -187,7 +187,7 @@ function Cart() {
         </Modal>
         <Modal show={order}
                animation={true}
-               onHide={()=> setOrder(false)}>
+               onHide={orderFunction}>
             <Modal.Header>
                 <Modal.Title>
                     {messageHeader}
