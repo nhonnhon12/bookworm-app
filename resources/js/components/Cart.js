@@ -19,6 +19,7 @@ import {selectCart, selectList, setEmpty} from "./redux/cartSlice";
 import axios from "axios";
 import Login from "./Login";
 import {setId} from "./redux/userSlice";
+import SuccessOrderPage from "./SuccessOrderPage";
 
 function Cart() {
     const cart = useSelector((state) => state.cart.items);
@@ -32,13 +33,15 @@ function Cart() {
     const [messageHeader, setMessageHeader] = useState('');
     const [messageBody, setMessageBody] = useState('');
     const [state, setState] = useState(false);
-    const [timing, setTiming] = useState(10);
     const [success, setSuccess] = useState(false);
 
     const orderFunction = () =>{
         if(state === true) {
             setSuccess(true);
-            setTiming(10);
+            setTimeout(() => {
+                setSuccess(false);
+                window.location.href = "/";
+            }, 10000);
         }
         setOrder(false);
     }
@@ -197,17 +200,6 @@ function Cart() {
                 <Button onClick={orderFunction}>OK!</Button>
             </Modal.Footer>
         </Modal>
-
-        <Modal show={success}
-               animation={true}>
-            <Modal.Header>
-                <Modal.Title>
-                    We're taking your order
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                Thanks for ordering. You will be redirected to the homepage in {timing} seconds!
-            </Modal.Body>
-        </Modal>
+        <SuccessOrderPage show={success}/>
     </>
 } export default Cart;
