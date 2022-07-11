@@ -102,7 +102,7 @@ function CartItem(props) {
 
         <Modal show={modal} animation={true}>
             <Modal.Header>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Remove product from cart</Modal.Title>
             </Modal.Header>
             <Modal.Body>Do you want to remove this product from cart?</Modal.Body>
             <Modal.Footer>

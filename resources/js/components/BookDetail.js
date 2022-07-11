@@ -1,4 +1,4 @@
-import {Alert, Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Button, Card, Col, Container, Form, Modal, Row} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
@@ -12,6 +12,7 @@ function BookDetail(props) {
     const [book, setBook] = useState(null);
     const [quantity, setQuantity] = useState(0);
     const [alert, setAlert] = useState(false);
+    const [modal, setModal] = useState(false);
     let id = useParams().id;
 
     const cart = useSelector(selectCart);
@@ -38,6 +39,7 @@ function BookDetail(props) {
 
     const addBook = () => {
         dispatch(setItem({id: book.id, num: quantity}));
+        setModal(true);
     }
 
     const changeQuantity = (e) => {
@@ -108,7 +110,7 @@ function BookDetail(props) {
                                     Maximum of quantity is 8 books.
                                 </Alert>
                             </Form.Group>
-                            <Button type="primary" id="add-book-button" onClick={addBook}> Add to cart </Button>
+                            <Button type="primary" id="add-book-button" onClick={addBook}>Update cart</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -151,6 +153,17 @@ function BookDetail(props) {
                 </Col>
             </Row>
         </Container>
+        <Modal show={modal} animation={true} onHide={() => {setModal(false);}}>
+            <Modal.Header>
+                <Modal.Title>Update cart</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Update cart successfully!</Modal.Body>
+            <Modal.Footer>
+                <Button onClick={() => {setModal(false);}}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </>
     else return <></>;
 } export default BookDetail;
