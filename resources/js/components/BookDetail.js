@@ -6,6 +6,7 @@ import '../../css/app.css'
 import {useDispatch, useSelector} from "react-redux";
 import {selectCart, setItem} from "./redux/cartSlice";
 import {Rate} from "antd";
+import Review from "./Review";
 
 function BookDetail(props) {
     const [book, setBook] = useState(null);
@@ -115,11 +116,7 @@ function BookDetail(props) {
             <br/>
             <Row>
                 <Col lg={8} sm={12}>
-                    <Card>
-                        <Card.Body>
-                            Review Section
-                        </Card.Body>
-                    </Card>
+                    <Review/>
                 </Col>
                 <Col lg={4} sm={12}>
                     <Card>

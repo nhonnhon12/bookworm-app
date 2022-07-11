@@ -23,7 +23,7 @@ function BookCard(props) {
                     <div>
                         {
                             props.rating !== null ?
-                                <><Rate disabled defaultValue={+props.rating} style={{ color: 'gray', fontSize: '14px' }}/>
+                                <><Rate disabled allowHalf defaultValue={+props.rating} style={{ fontSize: '14px' }}/>
                                     &nbsp;({props.count})</>
                                  : '(No review)'
                         }
