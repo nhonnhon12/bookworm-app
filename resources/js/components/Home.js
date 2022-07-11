@@ -6,7 +6,7 @@ import HomeFeaturedBook from "./HomeFeaturedBook";
 
 function Home() {
     const [tab, setTab] = useState(0);
-    console.log("home tab = " + tab);
+    document.title = 'BookWorm | Home';
     return (
         <>
             <Container>

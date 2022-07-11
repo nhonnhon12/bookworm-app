@@ -9,6 +9,7 @@ function Login() {
     const handleSubmit = () => {
         setValid(false);
     }
+    document.title = 'BookWorm | Login';
     return (
         <>
             <Container style={{maxWidth: '30vw', padding: '0'}}>

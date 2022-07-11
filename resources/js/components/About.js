@@ -30,6 +30,7 @@ const style={
 }
 
 function About() {
+    document.title = 'BookWorm | About';
     return (
         <>
             <Container>

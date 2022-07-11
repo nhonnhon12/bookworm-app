@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Book Worm</title>
-        <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+        <title>BookWorm</title>
     </head>
     <body>
         <div id="app"></div>

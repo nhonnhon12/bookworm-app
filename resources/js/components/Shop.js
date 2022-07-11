@@ -44,6 +44,12 @@ function Shop() {
         setTotal(i);
     }
 
+    useEffect(()=>{
+        document.title = 'BookWorm | Shop';
+        if(author!=0) document.title += ' Filtered by author #' + author;
+        if(category!=0) document.title += ' Filtered by category #' + category;
+    }, [category, author]);
+
     return (
         <>
             <Container style={{padding: '0vw', minHeight: '50vh'}}>

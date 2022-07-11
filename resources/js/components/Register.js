@@ -5,6 +5,7 @@ import "../../css/app.css"
 
 function Register() {
     const [valid, setValid] = useState(true);
+    document.title = 'BookWorm | Register';
     const handleSubmit = () => {
         setValid(false);
     }

@@ -23,6 +23,7 @@ function BookDetail(props) {
             axios.get(link)
                 .then(res => {
                     setBook(res.data);
+                    document.title = 'BookWorm | ' + res.data.title;
                 })
                 .catch(error => console.log(error));
             mounted = false;

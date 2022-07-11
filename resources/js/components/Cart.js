@@ -34,12 +34,16 @@ function Cart() {
                 .catch(error => console.log(error));
             mounted = false;
         }
+        document.title = 'BookWorm | Cart';
     }, [cart]);
 
     const placeOrder = () =>{
         setModal(true);
     }
 
+    useEffect(()=>{
+        if(modal === false) document.title = 'BookWorm | Cart';
+    },[modal]);
     return <>
         <Container>
             <Row style={{paddingLeft: '10px'}}>
@@ -95,7 +99,9 @@ function Cart() {
             </Row>
         </Container>
 
-        <Modal show={modal} animation={true} onHide={() => setModal(false)}>
+        <Modal show={modal}
+               animation={true}
+               onHide={() => setModal(false)}>
             <Login/>
         </Modal>
     </>
