@@ -82,6 +82,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
+                    'id' =>auth('sanctum')->user()->id,
                 ], 401);
             }
 
@@ -96,16 +97,30 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => 'Wrong Email or password!',
             ], 500);
         }
     }
+
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        Auth::guard('web')->logout();
         return [
             'message' => 'Logged out successfully',
-            'user' => auth('sanctum')->user()->id
+        ];
+    }
+
+    public function user(){
+        $userId = auth()->user()->id;
+        $user = User::query()->where('id', $userId)->first();
+        $first_name = $user->first_name;
+        $last_name = $user->last_name;
+        $email = $user->email;
+        return [
+            'userId' => $userId,
+            'first' => $first_name,
+            'last' => $last_name,
+            'email' => $email,
         ];
     }
 }

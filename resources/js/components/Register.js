@@ -11,7 +11,7 @@ function Register() {
     }
     return (
         <>
-            <Container style={{maxWidth: '30vw'}}>
+            <Container style={{maxWidth: '500px'}}>
                 <Card>
                     <Card.Header>
                         <h2 style={{margin: '5px'}}>

@@ -102,7 +102,7 @@ function Cart() {
         <Modal show={modal}
                animation={true}
                onHide={() => setModal(false)}>
-            <Login/>
+            <Login setModal={setModal}/>
         </Modal>
     </>
 } export default Cart;
