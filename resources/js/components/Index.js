@@ -8,9 +8,9 @@ import Shop from "./Shop";
 import About from "./About";
 import Cart from "./Cart";
 import BookDetail from "./BookDetail";
-import Error from "./Error";
 import Login from "./Login";
 import Register from "./Register";
+import ErrorPage from "./ErrorPage";
 
 function Index() {
     return (
@@ -27,6 +27,7 @@ function Index() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/book/:id" element={<BookDetail/>}/>
+                        <Route path="*" element={<ErrorPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>

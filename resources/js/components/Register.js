@@ -17,7 +17,7 @@ function Register() {
                         <h2 style={{margin: '5px'}}>
                             <strong>
                                 <center>
-                                    Register
+                                    Register (just build front-end)
                                 </center>
                             </strong>
                         </h2>
