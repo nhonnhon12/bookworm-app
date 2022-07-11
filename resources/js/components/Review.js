@@ -68,7 +68,7 @@ function Review() {
                                     style={{
                                         width: 150,
                                     }}
-                                    defaultValue="0"
+                                    defaultValue="5"
                                     optionFilterProp="children"
                                     filterOption={(input, option) => option.children.includes(input)}
                                     onChange={(value) => props.callback(value)}

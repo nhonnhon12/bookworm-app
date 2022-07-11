@@ -39,6 +39,7 @@ function CartItem(props) {
             setModal(true);
         } else if (e.target.value > 8) {
             setQuantity(8);
+            dispatch(setItem({id: book.id, num: 8}));
         }
         else {
             setQuantity(e.target.value);
@@ -61,11 +62,10 @@ function CartItem(props) {
                             <Col md={9} className="center-vertical">
                                 <p>
                                     <a href={'/book/' + id} target="_blank">
-                                        <b style={{color: 'black'}}>
+                                        <p id="cart-book-title">
                                             {book.title}
-                                        </b>
+                                        </p>
                                     </a>
-                                    <br/>
                                     {book.author}
                                 </p>
                             </Col>
@@ -100,7 +100,7 @@ function CartItem(props) {
             </Row>
         </ListGroup.Item>
 
-        <Modal show={modal} animation={true}>
+        <Modal show={modal} onHide={() => {setModal(false); setQuantity(1); dispatch(setItem({id: book.id, num: 1}));}} animation={true}>
             <Modal.Header>
                 <Modal.Title>Remove product from cart</Modal.Title>
             </Modal.Header>

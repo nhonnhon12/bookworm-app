@@ -1,14 +1,22 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Modal, Nav, Navbar} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import Login from "./Login";
 
 function Header(){
     const cart = useSelector((state) => state.cart.items);
     const [count, setCount] = useState(0);
+    const [modal, setModal] = useState(false);
 
     useEffect( () =>{
+        document.getElementById('home').style.color = "lightgray";
+        document.getElementById('shop').style.color = "lightgray";
+        document.getElementById('about').style.color = "lightgray";
+        document.getElementById('cart').style.color = "lightgray";
+        document.getElementById('login').style.color = "lightgray";
+
         var choosing;
         if(window.location.href.toString().includes("/shop") || window.location.href.toString().includes("/book")) choosing = document.getElementById('shop');
         else if(window.location.href.toString().includes("/about")) choosing = document.getElementById('about');
@@ -51,10 +59,17 @@ function Header(){
                     </Nav>
                     <Nav>
                         <Nav.Link href="/cart" id = 'cart'>Cart ({count})</Nav.Link>
-                        <Nav.Link href="/login" id = 'login'>Login</Nav.Link>
+                        <Nav.Link href="#" onSelect={() => setModal(true)} id = 'login'>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+        <Modal show={modal}
+               animation={true}
+               onHide={() => {
+                   setModal(false);
+               }}>
+            <Login/>
+        </Modal>
     </>;
 } export default Header;

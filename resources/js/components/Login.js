@@ -9,7 +9,7 @@ function Login() {
     const handleSubmit = () => {
         setValid(false);
     }
-    document.title = 'BookWorm | Login';
+    if(window.location.href.toString().includes("/login")) document.title = 'BookWorm | Login';
     return (
         <>
             <Container style={{maxWidth: '30vw', padding: '0'}}>
@@ -45,7 +45,7 @@ function Login() {
                             </Button>
                         </Form>
                         <Button id="account-button"
-                                variant="outline-primary"
+                                variant="light"
                                 href="/register"
                         >
                             Create new account

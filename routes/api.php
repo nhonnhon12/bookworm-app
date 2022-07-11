@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CartController;
@@ -31,7 +32,15 @@ Route::get('books/get-recommended', RecommendedController::class);
 Route::get('books/get-popular', PopularController::class);
 Route::resource('books', BooksController::class)->only(['index', 'show']);
 Route::resource('reviews', ReviewsController::class)->only(['index', 'store']);
-Route::resource('cart', CartController::class)->only('index', 'create', 'update', 'destroy');
-Route::get('/authors', AuthorController::class);
-Route::get('/categories', CategoryController::class);
-Route::get('/price', PriceController::class);
+Route::get('authors', AuthorController::class);
+Route::get('categories', CategoryController::class);
+Route::get('price', PriceController::class);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::resource('cart', CartController::class)->only('store');
+});
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/users', 'UserController@index');
+});

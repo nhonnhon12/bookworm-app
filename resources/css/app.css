@@ -159,3 +159,17 @@ h2{
     margin: 10px 0;
     width: 100%;
 }
+
+#cart-book-title{
+    height: 45px;
+    font-weight: bold;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: black;
+    margin-bottom: 0;
+}

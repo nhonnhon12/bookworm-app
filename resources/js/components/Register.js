@@ -65,11 +65,18 @@ function Register() {
                                     required
                                 />
                             </Form.Group>
-                            <Button  id="account-button"
-                                     type="submit">
+                            <Button id="account-button"
+                                    type="submit">
                                 Register
                             </Button>
                         </Form>
+                        <center>You have an account?</center>
+                        <Button id="account-button"
+                                variant="light"
+                                href="/login"
+                        >
+                            Login
+                        </Button>
                     </Card.Body>
                 </Card>
             </Container>
